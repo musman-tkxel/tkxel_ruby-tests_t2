@@ -4,9 +4,14 @@
   <div class="span6 offset3">
 
     <% if @isValid %>
-    <h4><%= @card_num %>: &nbsp &nbsp Card Number is Valid</h4>
+        Number: &nbsp &nbsp &nbsp<b><%= @card_num %><b>
+        <h4>Credit Card Number is Valid</h4>
+    <% elsif @newCardNumber %>
+            Card Number: &nbsp &nbsp &nbsp<b><%= @card_num %></b><br/>
+            Check Sum Appended Card Number: &nbsp &nbsp &nbsp<b><%= @newCardNumber %></b>
     <% else %>
-        <h4><%= @card_num %>: &nbsp &nbsp Card Number is Not Valid</h4>
+        Number: &nbsp &nbsp &nbsp<b><%= @card_num %><b>
+        <h4>Credit Card Number is Not Valid</h4>
     <% end %>
 
   </div>

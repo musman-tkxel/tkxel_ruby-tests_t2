@@ -6,6 +6,7 @@ T2::Application.routes.draw do
   root 'creditcard#index'
   match '/check_validation',    to: 'creditcard#check_validation',    via: 'post'
   match '/result',              to: 'creditcard#result',              via: 'get'
+
   resources :creditcard
 
   # Example of regular route:
