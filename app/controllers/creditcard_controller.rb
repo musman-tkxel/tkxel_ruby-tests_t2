@@ -36,19 +36,14 @@ class CreditcardController < ApplicationController
 
   def credit_card_valid?(account_number)
   begin
-
-    if account_number.to_s.length == 0
-      return
-    end
-
-    digits = account_number.scan(/./).map(&:to_i)
-    check = digits.pop
-
-    sum = digits.reverse.each_slice(2).map do |x, y|
-      [(x * 2).divmod(10), y]
-    end.flatten.inject(:+)
-
-    (10 - sum % 10) == check
+      s1 = s2 = 0
+      account_number.to_s.reverse.chars.each_slice(2) do |odd, even|
+        s1 += odd.to_i
+        double = even.to_i * 2
+        double -= 9 if double >= 10
+        s2 += double
+      end
+      (s1 + s2) % 10 == 0
   rescue => e
     "In-Valid Combination"
   end
@@ -56,14 +51,19 @@ class CreditcardController < ApplicationController
 
   def find_check_sum?(account_number)
   begin
-    digits = account_number.scan(/./).map(&:to_i)
-
-    sum = digits.reverse.each_slice(2).map do |x, y|
-      [(x * 2).divmod(10), y]
-    end.flatten.inject(:+)
-
-
-      (10 - sum % 10)
+    temp = account_number.to_s + "0"
+    s1 = s2 = 0
+    temp.to_s.reverse.chars.each_slice(2) do |odd, even|
+      s1 += odd.to_i
+      double = even.to_i * 2
+      double -= 9 if double >= 10
+      s2 += double
+    end
+    if (s1 + s2) % 10 == 0
+      0
+    else
+      10 - ((s1 + s2) % 10)
+    end
   rescue => e
       "In-Valid Combination"
   end
